@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Make sure only root can run this script
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as superuser. Type 'sudo !!'" 1>&2
+   exit 1
+fi
+
+HOST=$1
+
+#получаем имя хоста от пользователя, если оно не было передано первым параметром
+if [ -z "$HOST" ] ; then
+        echo -e "Название хоста: "
+	read HOST
+fi
+
+HOST="$HOST.localhost"
+
+# create the directory structure
+DOCROOT="/var/www/$HOST/www"
+mkdir -p $DOCROOT
+
+#Grant Permissions
+chown -R $SUDO_USER:$SUDO_USER $DOCROOT
+chmod -R 755 /var/www/$HOST
+
+#create a demo page
+echo "<?= 'eeeee'; " > $DOCROOT/index.php
+
+#Create New Virtual Host Files
+HOST_FILE="/etc/apache2/sites-available/$HOST.conf"
+
+#копируем шаблон хост файла
+cp /etc/apache2/sites-available/tpl.com.conf $HOST_FILE
+
+#в шаблоне меняем хост
+sed -i -e "s/tpl\.com/$HOST/g" "$HOST_FILE"
+
+#Enable the New Virtual Host Files
+a2ensite $HOST.conf
+service apache2 restart
+
+#Set Up Local Hosts File
+echo -e "127.0.0.1\t$HOST www.$HOST" >> /etc/hosts
+
+#Test Result
+su -c "google-chrome http://www.$HOST > /dev/null 2>&1 &" $SUDO_USER
