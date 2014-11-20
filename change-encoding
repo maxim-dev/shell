@@ -1,0 +1,12 @@
+# две функции для смены кодировки файлов
+# содержимое файла можно добавить в ~/.bashrc
+#
+# использование: 
+# w2u <file> 
+# 
+
+#change encoding windows-1251 -> utf-8
+function w2u { iconv -f windows-1251 -t utf-8 "$1" -o "$1"; }
+
+#and utf-8 -> windows-1251
+function u2w { iconv -f utf-8 -t windows-1251 "$1" -o "$1"; }
