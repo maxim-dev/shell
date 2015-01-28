@@ -1,0 +1,8 @@
+eval `ssh-agent -s` && ssh-add -t 30w ~/.ssh/keys/work
+
+sshfs space-travel.ru:/sites/html/Space-Travel/new/ ~/www/space/
+
+krusader >& /dev/null &
+google-chrome >& /dev/null &
+~/netbeans-8.0.1/bin/netbeans >& /dev/null &
+

@@ -1,0 +1,15 @@
+#!/usr/local/bin/bash
+
+# Unset GIT_DIR or the universe will implode
+unset GIT_DIR
+
+# Change directory to the working tree; exit on failure
+cd `git config --get core.worktree` || exit
+
+status=`git status --porcelain`
+
+if [[ -n $status ]]
+then
+  echo >&2 "Cannot push changes: You have unstaged or uncommitted changes or untracked files."
+  exit 1
+fi

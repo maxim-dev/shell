@@ -1,0 +1,13 @@
+Удалите кеш пакетов:
+sudo apt-get clean
+
+Удалите осиротевшие пакеты:
+sudo apt-get autoremove
+
+Обновите список пакетов:
+sudo apt-get update
+
+Исправьте зависимости:
+sudo apt-get -f install
+
+Обычно этого достаточно.
