@@ -1,0 +1,1 @@
+sudo hdparm -S 12 /dev/sda; sudo hdparm -S 12 /dev/sdb; sudo hdparm -S 12 /dev/sdc; sudo hdparm -S 12 /dev/sdd;
